@@ -4,8 +4,18 @@
 import json
 import sys
 import csv
-import pandas as pd
 from cryptography.fernet import Fernet
+
+def write_key():
+    key = Fernet.generate_key()
+
+    with open("key.key" , "wb") as key_file:
+        key_file.write(key)
+
+
+def read_key():
+    return open ("key.key" , "rb").read()
+
 
 #def readData(username, password):
     
@@ -17,14 +27,14 @@ with open('password.csv', mode='w', newline = '') as csvfile:
     
     for line in sys.stdin:
         w_name = input()
-        writer.writerow('website_name' : w_name)
+        writer.writerow([w_name])
         
         print("Enter your username: ")
         for line in sys.stdin:
             username = input()
-            writer.writerow('username' : username)
+            writer.writerow(username)
         
         print("Enter your password: ")
         for line in sys.stdin:
             password = input()
-            writer.writerow('password' : password)
+            writer.writerow(password)
