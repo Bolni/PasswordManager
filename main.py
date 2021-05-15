@@ -16,6 +16,8 @@ def write_key():
 def read_key():
     return open ("key.key" , "rb").read()
 
+def encrypt():
+    f = Fernet(key)
 
 #def readData(username, password):
     
