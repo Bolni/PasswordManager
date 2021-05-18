@@ -29,23 +29,32 @@ def decrypt(filename, key):
         file.write(decrypted_data)
 
 #def readData(username, password):
-    
-print("Enter the website name: ")
-with open('password.csv', "rb", mode='w', newline = '') as csvfile:
-    
-    fieldnames = ['website_name' , 'username' , 'password']
-    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-    
-    for line in sys.stdin:
-        w_name = input()
-        writer.writerow([w_name])
+
+print("Press 1 if you want to check the saved passwords or press 2 to add a new one\n")
+menu_input = int(input())
+
+if (menu_input == 1):
+    with open('password.csv') as csvfile:
+        line = csvfile.readline()
+        while line:
+            print(line)
+elif (enu_input == 2):
+    print("Enter the website name: ")
+    with open('password.csv', "rb", mode='w', newline = '') as csvfile:
         
-        print("Enter your username: ")
-        for line in sys.stdin:
-            username = input()
-            writer.writerow(username)
+        fieldnames = ['website_name' , 'username' , 'password']
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         
-        print("Enter your password: ")
         for line in sys.stdin:
-            password = input()
-            writer.writerow(password)
+            w_name = input()
+            writer.writerow([w_name])
+            
+            print("Enter your username: ")
+            for line in sys.stdin:
+                username = input()
+                writer.writerow(username)
+            
+            print("Enter your password: ")
+            for line in sys.stdin:
+                password = input()
+                writer.writerow(password)
