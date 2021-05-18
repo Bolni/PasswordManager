@@ -35,9 +35,10 @@ menu_input = int(input())
 
 if (menu_input == 1):
     with open('password.csv') as csvfile:
-        line = csvfile.readline()
-        while line:
-            print(line)
+        reader = csv.reader(csvfile)
+        for row in reader:
+            print(row)
+
 elif (enu_input == 2):
     print("Enter the website name: ")
     with open('password.csv', "rb", mode='w', newline = '') as csvfile:
