@@ -39,7 +39,7 @@ if (menu_input == 1):
         for row in reader:
             print(row)
 
-elif (enu_input == 2):
+elif (menu_input == 2):
     print("Enter the website name: ")
     with open('password.csv', "rb", mode='w', newline = '') as csvfile:
         
