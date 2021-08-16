@@ -4,6 +4,7 @@
 import json
 import sys
 import csv
+import getpass
 from cryptography.fernet import Fernet
 
 def write_key():
@@ -40,22 +41,20 @@ if (menu_input == 1):
             print(row)
 
 elif (menu_input == 2):
-    print("Enter the website name: ")
-    with open('password.csv', "rb", mode='w', newline = '') as csvfile:
-        
+    
+    with open('password.csv', mode='w') as csvfile:
+
         fieldnames = ['website_name' , 'username' , 'password']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         
-        for line in sys.stdin:
-            w_name = input()
-            writer.writerow([w_name])
-            
-            print("Enter your username: ")
-            for line in sys.stdin:
-                username = input()
-                writer.writerow(username)
-            
-            print("Enter your password: ")
-            for line in sys.stdin:
-                password = input()
-                writer.writerow(password)
+        print("Enter the website name: ")
+        website_name = getpass.getpass("")
+        writer.writerow({'website_name' : website_name})
+        
+        print("Enter your username: ")
+        username = getpass.getpass("")
+        writer.writerow({'username' : username})
+        
+        print("Enter your password: ")
+        password = getpass.getpass("")
+        writer.writerow({'password' : password})
