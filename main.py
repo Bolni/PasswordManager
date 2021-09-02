@@ -31,30 +31,31 @@ def decrypt(filename, key):
 
 #def readData(username, password):
 
-print("Press 1 if you want to check the saved passwords or press 2 to add a new one\n")
+print("\nPress 1 if you want to check the saved passwords or press 2 to add a new one\n")
 menu_input = int(input())
 
 if (menu_input == 1):
-    with open('password.csv') as csvfile:
+    with open('password.csv', newline='') as csvfile:
         reader = csv.reader(csvfile)
         for row in reader:
             print(row)
 
 elif (menu_input == 2):
     
-    with open('password.csv', mode='w') as csvfile:
+    with open('password.csv', mode='a+', newline='') as csvfile:
 
         fieldnames = ['website_name' , 'username' , 'password']
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames, lineterminator='\n')
         
         print("Enter the website name: ")
-        website_name = getpass.getpass("")
-        writer.writerow({'website_name' : website_name})
+        website_name = input()
         
         print("Enter your username: ")
-        username = getpass.getpass("")
-        writer.writerow({'username' : username})
+        username = input()
         
         print("Enter your password: ")
-        password = getpass.getpass("")
+        password = input()
+
+        writer.writerow({'website_name' : website_name})
+        writer.writerow({'username' : username})
         writer.writerow({'password' : password})
