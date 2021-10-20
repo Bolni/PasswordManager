@@ -4,6 +4,7 @@
 import json
 import sys
 import csv
+import getpass
 from cryptography.fernet import Fernet
 
 def write_key():
@@ -30,32 +31,24 @@ def decrypt(filename, key):
 
 #def readData(username, password):
 
-print("Press 1 if you want to check the saved passwords or press 2 to add a new one\n")
+print("\nPress 1 if you want to check the saved passwords or press 2 to add a new one\n")
 menu_input = int(input())
 
 if (menu_input == 1):
-    with open('password.csv') as csvfile:
+    with open('password.csv', newline='') as csvfile:
         reader = csv.reader(csvfile)
         for row in reader:
             print(row)
 
 elif (menu_input == 2):
-    print("Enter the website name: ")
-    with open('password.csv', "rb", mode='w', newline = '') as csvfile:
-        
-        fieldnames = ['website_name' , 'username' , 'password']
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-        
-        for line in sys.stdin:
-            w_name = input()
-            writer.writerow([w_name])
-            
-            print("Enter your username: ")
-            for line in sys.stdin:
-                username = input()
-                writer.writerow(username)
-            
-            print("Enter your password: ")
-            for line in sys.stdin:
-                password = input()
-                writer.writerow(password)
+    
+    with open('password.csv', mode='w+', newline='') as csvfile:
+
+        writer = csv.writer(csvfile)
+        writer.writerow(["Website name", "Username", "Password"])
+
+        website_name = input("Enter the website name: ")
+        username = input("Enter the username: ")
+        password = input("Enter the password: ")
+
+        writer.writerow([website_name,username,password])
