@@ -42,20 +42,13 @@ if (menu_input == 1):
 
 elif (menu_input == 2):
     
-    with open('password.csv', mode='a+', newline='') as csvfile:
+    with open('password.csv', mode='w+', newline='') as csvfile:
 
-        fieldnames = ['website_name' , 'username' , 'password']
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames, lineterminator='\n')
-        
-        print("Enter the website name: ")
-        website_name = input()
-        
-        print("Enter your username: ")
-        username = input()
-        
-        print("Enter your password: ")
-        password = input()
+        writer = csv.writer(csvfile)
+        writer.writerow(["Website name", "Username", "Password"])
 
-        writer.writerow({'website_name' : website_name})
-        writer.writerow({'username' : username})
-        writer.writerow({'password' : password})
+        website_name = input("Enter the website name: ")
+        username = input("Enter the username: ")
+        password = input("Enter the password: ")
+
+        writer.writerow([website_name,username,password])
