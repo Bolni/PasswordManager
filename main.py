@@ -42,11 +42,14 @@ if (menu_input == 1):
 
 elif (menu_input == 2):
     
-    with open('password.csv', mode='w+', newline='') as csvfile:
+    with open('password.csv', mode='a+', newline='') as csvfile:
 
         writer = csv.writer(csvfile)
-        writer.writerow(["Website name", "Username", "Password"])
-
+        
+        for i in enumerate(csvfile):
+            if (i != 0):
+                writer.writerow(["Website name", "Username", "Password"])
+                
         website_name = input("Enter the website name: ")
         username = input("Enter the username: ")
         password = input("Enter the password: ")
