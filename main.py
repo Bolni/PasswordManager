@@ -17,9 +17,6 @@ def write_key():
 def read_key():
     return open ("key.key" , "rb").read()
 
-def encrypt():
-    f = Fernet(key)
-
 def decrypt(filename, key):
     f = Fernet(key)
     with open(filename, "rb") as file:
@@ -30,10 +27,11 @@ def decrypt(filename, key):
     with open(filename, "wb") as file:
         file.write(decrypted_data)
 
-#def readData(username, password):
-
 print("\nPress 1 if you want to check the saved passwords or press 2 to add a new one\n")
 menu_input = int(input())
+
+key = Fernet.generate_key()
+f = Fernet(key)
 
 if (menu_input == 1):
     with open('password.csv', newline='') as csvfile:
@@ -55,4 +53,8 @@ elif (menu_input == 2):
         username = input("Enter the username: ")
         password = input("Enter the password: ")
 
-        writer.writerow([website_name,username,password])
+        website_name_token = f.encrypt(bytes(website_name, 'UTF-8'))
+        username_token = f.encrypt(bytes(username, 'UTF-8'))
+        password_token = f.encrypt(bytes(password, 'UTF-8'))
+
+        writer.writerow([website_name_token,username_token,password_token])
