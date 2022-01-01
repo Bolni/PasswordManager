@@ -4,8 +4,8 @@
 import json
 import sys
 import csv
-import getpass
 import os
+import pandas as pd
 from cryptography.fernet import Fernet
 
 def write_key():
@@ -35,9 +35,11 @@ f = Fernet(key)
 
 if (menu_input == 1):
     with open('password.csv', newline='') as csvfile:
-        reader = csv.reader(csvfile)
-        for row in reader:
-            print(row)
+        data = pd.read_csv('password.csv', usecols=['Website name','Username','Password'])
+        for index, row in data.iterrows:
+            data_decrypt = f.decrypt(bytes.decode(data.iloc[row], 'UTF-8'))
+            print(data_decrypt)
+
 
 elif (menu_input == 2):
     
