@@ -8,6 +8,7 @@ import os
 import pandas as pd
 from cryptography.fernet import Fernet
 
+
 def write_key():
     key = Fernet.generate_key()
 
@@ -30,16 +31,17 @@ def decrypt(filename, key):
 print("\nPress 1 if you want to check the saved passwords or press 2 to add a new one\n")
 menu_input = int(input())
 
-key = Fernet.generate_key()
+write_key()
+key = read_key()
 f = Fernet(key)
 
 if (menu_input == 1):
-    with open('password.csv', newline='') as csvfile:
-        data = pd.read_csv('password.csv', usecols=['Website name','Username','Password'])
-        for index, row in data.iterrows:
-            data_decrypt = f.decrypt(bytes.decode(data.iloc[row], 'UTF-8'))
-            print(data_decrypt)
+    with open('password.csv', 'rb') as enc_file:
+        encrypted = enc_file.read()
 
+        decrypted = decrypt(encrypted, key)
+
+        print(decrypted)
 
 elif (menu_input == 2):
     
