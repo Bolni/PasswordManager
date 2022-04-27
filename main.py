@@ -4,9 +4,10 @@
 import json
 import sys
 import csv
-import getpass
 import os
+import pandas as pd
 from cryptography.fernet import Fernet
+
 
 def write_key():
     key = Fernet.generate_key()
@@ -16,9 +17,6 @@ def write_key():
 
 def read_key():
     return open ("key.key" , "rb").read()
-
-def encrypt():
-    f = Fernet(key)
 
 def decrypt(filename, key):
     f = Fernet(key)
@@ -30,16 +28,20 @@ def decrypt(filename, key):
     with open(filename, "wb") as file:
         file.write(decrypted_data)
 
-#def readData(username, password):
-
 print("\nPress 1 if you want to check the saved passwords or press 2 to add a new one\n")
 menu_input = int(input())
 
+write_key()
+key = read_key()
+f = Fernet(key)
+
 if (menu_input == 1):
-    with open('password.csv', newline='') as csvfile:
-        reader = csv.reader(csvfile)
-        for row in reader:
-            print(row)
+    with open('password.csv', 'rb') as enc_file:
+        encrypted = enc_file.read()
+
+        decrypted = decrypt(encrypted, key)
+
+        print(decrypted)
 
 elif (menu_input == 2):
     
@@ -55,4 +57,8 @@ elif (menu_input == 2):
         username = input("Enter the username: ")
         password = input("Enter the password: ")
 
-        writer.writerow([website_name,username,password])
+        website_name_token = f.encrypt(bytes(website_name, 'UTF-8'))
+        username_token = f.encrypt(bytes(username, 'UTF-8'))
+        password_token = f.encrypt(bytes(password, 'UTF-8'))
+
+        writer.writerow([website_name_token,username_token,password_token])
